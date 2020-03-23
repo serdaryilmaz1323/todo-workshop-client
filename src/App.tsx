@@ -1,26 +1,54 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Provider } from 'react-redux';
+import { configureStore } from './redux/store';
+import NotificationContainer from './components/notification/NotificationContainer';
+import { Switch, Redirect, Route, useLocation } from 'react-router';
+import { useTypeSelector } from './redux/helper/selector.helper';
+import { BrowserRouter } from 'react-router-dom';
+import Home from './pages/Home';
+import ErrorPage from './pages/ErrorPage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+const App: React.FC = () => (
+  <Provider store={configureStore()}>
+    <div>
+      <NotificationContainer />
+      <BrowserRouter>
+        <Switch>
+          <AuthRoute path="/home" component={Home} exact />{' '}
+          {/*<AuthRoute path="/decision/new" component={NewDecisionPage} exact />*/}
+          <Route path="/login" component={LoginPage} exact />
+          <Route path="/register" component={RegisterPage} exact />
+          <Route exact path="/" render={() => <Redirect to="/home" />} />
+          <Route path="/error" exact component={ErrorPage} />
+          <Redirect to="/error" />
+        </Switch>
+      </BrowserRouter>
     </div>
-  );
-}
+  </Provider>
+);
 
 export default App;
+
+const AuthRoute = ({ component: Component, ...rest }: any) => {
+  const { authUser } = useTypeSelector(s => s.authState);
+  const location = useLocation();
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        authUser ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: '/login',
+              state: { from: location },
+            }}
+          />
+        )
+      }
+    />
+  );
+};

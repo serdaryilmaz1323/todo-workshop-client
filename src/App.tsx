@@ -7,8 +7,8 @@ import { useTypeSelector } from './redux/helper/selector.helper';
 import { BrowserRouter } from 'react-router-dom';
 import Home from './pages/Home';
 import ErrorPage from './pages/ErrorPage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
+import LoginPage from './pages/LoginPage/LoginPage';
+import RegisterPage from './pages/RegisterPage/RegisterPage';
 
 const App: React.FC = () => (
   <Provider store={configureStore()}>

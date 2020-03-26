@@ -3,8 +3,11 @@ import { HttpService } from './http.service';
 
 export const AuthService = {
   removeAuthenticationInfo: () => {
+    console.log('Logout');
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+
+    console.log(localStorage);
     HttpService.initializeAxios();
   },
   setAuthenticationInfo: (user: IUser, token: string) => {

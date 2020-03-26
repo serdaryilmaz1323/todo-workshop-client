@@ -1,0 +1,12 @@
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+label.error {
+  color: red;
+}
+
+button {
+  margin-top: 20px;
+}

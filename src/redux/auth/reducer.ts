@@ -14,7 +14,10 @@ export interface AuthState {
 const { user, token } = AuthService.getAuthenticationInfo();
 const initialState: AuthState = { loading: false, authUser: user, token };
 
-export const authReducer: Reducer<AuthState, AuthAction> = (state = initialState, action): AuthState => {
+export const authReducer: Reducer<AuthState, AuthAction> = (
+  state = initialState,
+  action,
+): AuthState => {
   switch (action.type) {
     case AuthActionTypes.LOGIN:
       return { ...state, loading: true, error: undefined };
@@ -43,8 +46,15 @@ export const authReducer: Reducer<AuthState, AuthAction> = (state = initialState
     }
 
     case AuthActionTypes.LOGOUT:
+      console.log('Logout3');
       AuthService.removeAuthenticationInfo();
-      return { ...state, loading: false, error: undefined, authUser: undefined, token: undefined };
+      return {
+        ...state,
+        loading: false,
+        error: undefined,
+        authUser: undefined,
+        token: undefined,
+      };
 
     default:
       return { ...state };

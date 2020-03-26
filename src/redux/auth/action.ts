@@ -11,11 +11,24 @@ export const AuthActions = {
     action(AuthActionTypes.LOGIN_SUCCESS, { history, user, token }),
   loginError: (error: string) => action(AuthActionTypes.LOGIN_ERROR, { error }),
 
-  register: (history: History, username: string, password: string, firstName?: string, lastName?: string) =>
-    action(AuthActionTypes.REGISTER, { history, username, password, firstName, lastName }),
+  register: (
+    history: History,
+    username: string,
+    password: string,
+    firstName?: string,
+    lastName?: string,
+  ) =>
+    action(AuthActionTypes.REGISTER, {
+      history,
+      username,
+      password,
+      firstName,
+      lastName,
+    }),
   registerSuccess: (history: History, user: IUser, token: string) =>
     action(AuthActionTypes.REGISTER_SUCCESS, { history, user, token }),
-  registerError: (error: string) => action(AuthActionTypes.REGISTER_ERROR, { error }),
+  registerError: (error: string) =>
+    action(AuthActionTypes.REGISTER_ERROR, { error }),
 
   logout: () => action(AuthActionTypes.LOGOUT),
 };
